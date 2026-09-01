@@ -50,4 +50,47 @@ The data observed and used comes from Medical Insurance Charges dataset identifi
 ##Cleaning
 Since we will be examining dfferent values and want to be able to make conclusions based on the output, we created a new binary variable. In the original data, an individual being a smoker followed a 'yes" or "no". This now becomes 1=smoker and 0=non-smoker
 
+```{r load-data}
+insurance_data <- read_csv("insurance.csv")
+```
+
+```{r clean-data}
+insurance_clean <- insurance_data |>
+  mutate(smoker_binary = ifelse(smoker == "yes", 1, 0)) |>
+  drop_na()
+
+n_obs <- nrow(insurance_clean)
+```
+``{r summary-stats} 
+
+summary_table <- insurance_clean |>
+  summarise(
+    n = n(),
+    charges_mean = mean(charges),
+    charges_sd   = sd(charges),
+    charges_min  = min(charges),
+    charges_max  = max(charges),
+    
+    smoker_mean  = mean(smoker_binary),
+    smoker_sd    = sd(smoker_binary),
+    
+    age_mean     = mean(age),
+    age_sd       = sd(age),
+    age_min      = min(age),
+    age_max      = max(age),
+    
+    bmi_mean     = mean(bmi),
+    bmi_sd       = sd(bmi),
+    bmi_min      = min(bmi),
+    bmi_max      = max(bmi),
+    
+    children_mean = mean(children),
+    children_sd   = sd(children),
+    children_min  = min(children),
+    children_max  = max(children)
+  )
+
+kable(summary_table, caption = "Summary Statistics for Key Variables") |>
+  kable_styling(full_width = FALSE)
+```
 
