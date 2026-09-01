@@ -2,7 +2,7 @@
 
 ---
 title: "Do Smokers Face Higher Medical Charges?"
-author: "Maddie Thompson (UID 006460651) and Tommy Ngyugen (UID 206756393)"
+author: "Maddie Thompson (UID 006460651) and Tommy Nguyen (UID 206756393)"
 date: "September 7, 2026"
 output: 
   pdf_document:
