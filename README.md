@@ -88,7 +88,6 @@ summary_table <- insurance_clean |>
     children_sd   = sd(children),
     children_min  = min(children),
     children_max  = max(children)
-  )
 
 kable(summary_table, caption = "Summary Statistics for Key Variables") |>
   kable_styling(full_width = FALSE)
