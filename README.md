@@ -44,4 +44,10 @@ Explanatory Variables: smoker — yes/no indicator (1 if smoker, 0 if non-smoker
 ##Hypothesis & Why?
 Smokers in the United States have overall higher annual charges to their medical insurance through controlling for other factors. There is often a common understanding that smoker often have higher health needs compared to an individual who does not smoke.
 
+#Data
+##Data Source
+The data observed and used comes from Medical Insurance Charges dataset identified through Kaggle. Through the listed data, there the data take account of indivudal characteristics such as BMI (body mass index), number of children, region, age, sex (female or male), and being a smoker.
+##Cleaning
+Since we will be examining dfferent values and want to be able to make conclusions based on the output, we created a new binary variable. In the original data, an individual being a smoker followed a 'yes" or "no". This now becomes 1=smoker and 0=non-smoker
+
 
