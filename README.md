@@ -93,3 +93,72 @@ kable(summary_table, caption = "Summary Statistics for Key Variables") |>
   kable_styling(full_width = FALSE)
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SECOND OPTION: 
+---
+title: "Coding Health Outcome"
+author: "Maddie Thompson (UID 006460651) & Tommy Nguyen (UID 206756393)"
+date: "September 7, 2026"
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    geometry: margin=0.9in
+    fontsize: 11pt
+header-includes:
+  - \usepackage{titling}
+  - \setlength{\droptitle}{-4em}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 6,
+  fig.height = 4
+)
+
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
+library(kableExtra)
+library(fixest)
+library(car)
+```
+NEED TO FINISH: 
+#Introduction 
+##Research Question: 
+##Dependent & explanatory Variables: 
+##Hypothesis & Why: 
+
+#Data 
+##Data Source
+##Cleaning
+
+```{r load-data}
+health_raw <- read_csv("healthdata.csv")
+glimpse(health_raw)
+```
