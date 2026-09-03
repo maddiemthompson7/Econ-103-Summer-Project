@@ -69,6 +69,41 @@ summary_vars <- tibble(
   )
 )
 
+coding other option/similar to example:
+```{r summary}
+summary_vars <- tibble(
+  Variable = c(
+    "Fair/Poor Health (%)",
+    "Adult Smoking (%)",
+    "Income Inequality (ratio)",
+    "Some College (%)",
+    "Uninsured (%)",
+    "Population"
+  ),
+  values = list(
+    gp_reg_data$outcome,
+    gp_reg_data$smoking,
+    gp_reg_data$income,
+    gp_reg_data$education,
+    gp_reg_data$uninsured,
+    gp_reg_data$population
+  )
+)
+summary_table <- summary_vars %>%
+  mutate(
+    Mean = sapply(values, mean),
+    SD   = sapply(values, sd),
+    Min  = sapply(values, min),
+    Max  = sapply(values, max),
+    N    = sapply(values, length)
+  ) %>%
+  select(-values)
+
+kbl(summary_table, digits = 3, booktabs = TRUE,
+    caption = "Summary statistics for outcome and key explanatory variables") %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
 ###Figure 1: Health Outome VS. Smoking
 ```{r figure #1}
 ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
