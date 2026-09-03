@@ -69,7 +69,19 @@ summary_vars <- tibble(
   )
 )
 
-
+###Figure 1: Health Outome VS. Smoking
+```{r figure #1}
+ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
+  geom_point(alpha = 0.4, color = "grey40") +
+  geom_smooth(method = "lm", se = FALSE, color = "#1F7A5C", linewidth = 1) +
+  labs(
+    title = "Counties with higher smoking tend to report worse health",
+    x = "Adult Smoking Rate",
+    y = "Fair/Poor Health",
+    caption = paste("n =", n_obs)
+  ) +
+  theme_minimal()
+```
 
 
 
