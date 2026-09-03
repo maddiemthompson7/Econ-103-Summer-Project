@@ -39,7 +39,11 @@ library(car)
 fit_color <- "#C1440E"
 ```
 # Introduction
-Do counties with higher adult smoking rates have a higher share of adults in fair or poor health? We expect yes, with a positive coefficient of roughly [NUMBER] in the model, because smoking can cause disease directly and a high county smoking rate also signifies a broader health culture locally. In other words, places where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink when income, education, insurance, and county size enter, but not to collapse, because [REASON]
+Do counties with higher adult smoking rates have a higher share of adults in fair or poor health?
+We expect yes, with a positive coefficient of roughly [NUMBER] in the model, because smoking can cause disease
+directly and a high county smoking rate also signifies a broader health culture locally. In other words, places
+where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink
+when income, education, insurance, and county size enter, but not to collapse, because [REASON]
 
 ```{r summary-table}
 # Task 2: Summary-statistics table ========================================
