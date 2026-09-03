@@ -44,9 +44,13 @@ directly and a high county smoking rate also signifies a broader health culture 
 where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink
 when income, education, insurance, and county size enter, but not to collapse, because [REASON]
 
-### Research Question:  
-## Dependent & explanatory Variables: 
-## Hypothesis & Why: 
+# Introduction-option 2-similar to example
+Do counties with higher smoking rates have worse health outcomes? We dive into this question through data from the 2025 County Health Rankings analytical data set. This data shows each county in its own row, providing information regarding its poor/fair raw value, smoking rate, income inequality, educational level, uninsured rate, population size, and other factors. 
+
+Our dependent variable is the percentage of adults who report that they have poor or fair health. Our explanatory variable is the county's adult smoking rate, where the number of adults who smoke is observed. We include some additional explanatory variables to thoroughly run tests on the data. We include income inequality, education level, uninsured, and population size of the county. Each of these variables are associated with smoking, showing their importance and why they should not be omitted.
+
+By choosing this data, we predict that individuals who smoke have an association with worse health. This is something that is worldwide, showing more illness in smokers, such as lung cancer, respiratory diseases, cardiovascular diseases, poor dental health, etc. Having this in mind, we expect that a 1-point increase in smoking shall impact an individual's health. Through broader research, we find that even small increases in smoking can negatively impact one's health. We expect there to be a positive coefficient and smoking to be economically significant in an individual's health. 
+
 
 # Data 
 ## Data Source
