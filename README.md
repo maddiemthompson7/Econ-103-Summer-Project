@@ -33,32 +33,9 @@ library(kableExtra)
 library(fixest)
 library(car)
 ```
-
-# One accent colour for every fitted line in the report.
-fit_color <- "#C1440E"
-```
-# Introduction
-Do counties with higher adult smoking rates have a higher share of adults in fair or poor health?
-We expect yes, with a positive coefficient of roughly [NUMBER] in the model, because smoking can cause disease
-directly and a high county smoking rate also signifies a broader health culture locally. In other words, places
-where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink
-when income, education, insurance, and county size enter, but not to collapse, because [REASON]
-
-# Introduction-option 2-similar to example
-Do counties with higher smoking rates have worse health outcomes? We dive into this question through data from the 2025 County Health Rankings analytical data set. This data shows each county in its own row, providing information regarding its poor/fair raw value, smoking rate, income inequality, educational level, uninsured rate, population size, and other factors. 
-
-Our dependent variable is the percentage of adults who report that they have poor or fair health. Our explanatory variable is the county's adult smoking rate, where the number of adults who smoke is observed. We include some additional explanatory variables to thoroughly run tests on the data. We include income inequality, education level, uninsured, and population size of the county. Each of these variables are associated with smoking, showing their importance and why they should not be omitted.
-
-By choosing this data, we predict that individuals who smoke have an association with worse health. This is something that is worldwide, showing more illness in smokers, such as lung cancer, respiratory diseases, cardiovascular diseases, poor dental health, etc. Having this in mind, we expect that a 1-point increase in smoking shall impact an individual's health. Through broader research, we find that even small increases in smoking can negatively impact one's health. We expect there to be a positive coefficient and smoking to be economically significant in an individual's health. 
-
-
-# Data 
-## Data Source
-## Cleaning
-
 ```{r load-data, include = FALSE}
 health_raw <- read_csv("countyhealth2025.csv")
-# Try to detetct columns by partial name
+# Try to detect columns by partial name
 colnames(health_raw)
 ```
 
@@ -86,8 +63,33 @@ gp_reg_data <- health_raw %>%
   ) %>%
   drop_na()
 n_obs <- nrow(gp_reg_data)
-
 ```
+
+# One accent colour for every fitted line in the report.
+fit_color <- "#C1440E"
+```
+# Introduction
+Do counties with higher adult smoking rates have a higher share of adults in fair or poor health?
+We expect yes, with a positive coefficient of roughly [NUMBER] in the model, because smoking can cause disease
+directly and a high county smoking rate also signifies a broader health culture locally. In other words, places
+where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink
+when income, education, insurance, and county size enter, but not to collapse, because [REASON]
+
+# Introduction-option 2-similar to example
+Do counties with higher smoking rates have worse health outcomes? We dive into this question through data from the 2025 County Health Rankings analytical data set. This data shows each county in its own row, providing information regarding its poor/fair raw value, smoking rate, income inequality, educational level, uninsured rate, population size, and other factors. 
+
+Our dependent variable is the percentage of adults who report that they have poor or fair health. Our explanatory variable is the county's adult smoking rate, where the number of adults who smoke is observed. We include some additional explanatory variables to thoroughly run tests on the data. We include income inequality, education level, uninsured, and population size of the county. Each of these variables are associated with smoking, showing their importance and why they should not be omitted.
+
+By choosing this data, we predict that individuals who smoke have an association with worse health. This is something that is worldwide, showing more illness in smokers, such as lung cancer, respiratory diseases, cardiovascular diseases, poor dental health, etc. Having this in mind, we expect that a 1-point increase in smoking shall impact an individual's health. Through broader research, we find that even small increases in smoking can negatively impact one's health. We expect there to be a positive coefficient and smoking to be economically significant in an individual's health. 
+
+# Data 
+Each observation is from U.S County Health data in 2025. There are 3172 rows observed in 2025. No rows were removed but columns were removed due to the amount the data holds. There are hundreds of measures included which is not feasible or necessary for this regression. 
+
+Table #1: Population showsis heavily right-skewed data, with a mean of 312,000 with a maximum of of 334 million.
+
+## Data Source
+## Cleaning
+
 
 ```{r summary-table}
 # Task 2: Summary-statistics table ========================================
@@ -114,7 +116,7 @@ summary_vars <- tibble(
 )
 
 coding other option/similar to example:
-```{r summary}
+```{r summary, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 summary_vars <- tibble(
   Variable = c(
     "Fair/Poor Health (%)",
@@ -133,6 +135,7 @@ summary_vars <- tibble(
     gp_reg_data$population
   )
 )
+
 summary_table <- summary_vars %>%
   mutate(
     Mean = sapply(values, mean),
@@ -144,9 +147,9 @@ summary_table <- summary_vars %>%
   select(-values)
 
 kbl(summary_table, digits = 3, booktabs = TRUE,
-    caption = "Summary statistics for outcome and key explanatory variables") %>%
-  kable_styling(latex_options = "HOLD_position")
+    caption = "Summary Statistics")
 ```
+The average county reports 19.6% of adults who are in poor/fair health with a standard deviation 0f 4.8%, showing that counties differed in health outcomes. The average individual smoking rate is 18% with a range from approximately 6% to 38%. County population's had a larger range from 217 residents to 334 million, averaging 312,000 which does not fully show the range. 
 
 ### Figure 1: Health Outome VS. Smoking
 ```{r fig1}
