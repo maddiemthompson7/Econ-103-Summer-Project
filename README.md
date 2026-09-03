@@ -151,32 +151,48 @@ kbl(summary_table, digits = 3, booktabs = TRUE,
 ```
 The average county reports 19.6% of adults who are in poor/fair health with a standard deviation 0f 4.8%, showing that counties differed in health outcomes. The average individual smoking rate is 18% with a range from approximately 6% to 38%. County population's had a larger range from 217 residents to 334 million, averaging 312,000 which does not fully show the range. 
 
-### Figure 1: Health Outome VS. Smoking
-```{r fig1}
+## Figure 1: Health Outome VS. Smoking
+```{r fig1, fig.width=5, fig.height=3, out.width="60%"}
 ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
-  geom_point(alpha = 0.4, color = "grey40") +
+  geom_point(alpha = 0.45, size = 1.1, color = "grey30") +
   geom_smooth(method = "lm", se = FALSE, color = "#1F7A5C", linewidth = 1) +
   labs(
-    title = "Counties with higher smoking tend to report worse health",
+    title = "Figure 1: Counties with higher smoking tend to 
+                          report worse health",
+    subtitle = "The fitted line slopes upward, summarizing the positive association",
     x = "Adult Smoking Rate",
     y = "Fair/Poor Health",
-    caption = paste("n =", n_obs)
+    caption = paste0("One point per county (n = ", n_obs,
+                     "). Line is OLS. Data: County Health Rankings 2025.")
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.caption = element_text(color = "grey40", hjust = 0),
+    panel.grid.minor = element_blank()
+  )
 ```
 ### Figure 2: Transformed Data
-```{r fig2}
+```{r fig2, fig.width=5, fig.height=3, out.width="60%"}
 ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
-  geom_point(alpha = 0.4, color = "grey40") +
+  geom_point(alpha = 0.45, size = 1.1, color = "grey30") +
   geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE,
               color = "#1F7A5C", linewidth = 1) +
   labs(
-    title = "Quadratic Smoking Term and Controls in 2 OLS Specifications",
+    title = "Figure 2: Quadratic Smoking Term and Controls in 
+                        2 OLS Specifications",
+    subtitle = "The quadratic curve bends upward, indicating stronger association at higher smoking rates",
     x = "Adult Smoking Rate",
     y = "Fair/Poor Health",
-    caption = paste("n =", n_obs)
+    caption = paste0("One point per county (n = ", n_obs,
+                     "). Line is quadratic OLS. Data: County Health Rankings 2025.")
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.caption = element_text(color = "grey40", hjust = 0),
+    panel.grid.minor = element_blank()
+  )
 ```
 #Regression
 ```{r regression}
