@@ -2,18 +2,18 @@
 
 ---
 title: "Adult Smoking & County Health Outcomes"
-author: "Group 22. Maddie Thompson (UID 006460651) and Tommy Nguyen (UID 206756393)
+author: "Maddie Thompson (UID 006460651) & Tommy Nguyen (UID 206756393)"
 date: "September 7, 2026"
 output:
   pdf_document:
     latex_engine: pdflatex
-    geometry: margin=0.9in
-    fontsize: 11pt
+  word_document: default
 header-includes:
-  - \usepackage{titling}
-  - \setlength{\droptitle}{-4em}
-  - \usepackage{float}
-  - \usepackage{booktabs}
+- \usepackage{titling}
+- \setlength{\droptitle}{-4em}
+- \usepackage{float}
+- \usepackage{booktabs}
+- \fontsize{11pt}{13pt}\selectfont
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +25,6 @@ knitr::opts_chunk$set(
   fig.height = 4
 )
 
-```{r packages}
 library(dplyr)
 library(tidyr)
 library(readr)
@@ -44,6 +43,47 @@ We expect yes, with a positive coefficient of roughly [NUMBER] in the model, bec
 directly and a high county smoking rate also signifies a broader health culture locally. In other words, places
 where smoking is common tend to have other habits that track with worse health. We expect the coefficient to shrink
 when income, education, insurance, and county size enter, but not to collapse, because [REASON]
+
+### Research Question:  
+## Dependent & explanatory Variables: 
+## Hypothesis & Why: 
+
+# Data 
+## Data Source
+## Cleaning
+
+```{r load-data, include = FALSE}
+health_raw <- read_csv("countyhealth2025.csv")
+# Try to detetct columns by partial name
+colnames(health_raw)
+```
+
+```{r clean}
+# DO NOT convert all character columns to numeric
+# Only convert numeric-looking columns
+
+gp_reg_data <- health_raw %>%
+  select(
+    state      = `State Abbreviation`,
+    outcome    = `Poor or Fair Health raw value`,
+    smoking    = `Adult Smoking raw value`,
+    income     = `Income Inequality raw value`,
+    education  = `Some College raw value`,
+    uninsured  = `Uninsured raw value`,
+    population = `Population raw value`
+  ) %>%
+  mutate(
+    outcome    = as.numeric(outcome),
+    smoking    = as.numeric(smoking),
+    income     = as.numeric(income),
+    education  = as.numeric(education),
+    uninsured  = as.numeric(uninsured),
+    population = as.numeric(population)
+  ) %>%
+  drop_na()
+n_obs <- nrow(gp_reg_data)
+
+```
 
 ```{r summary-table}
 # Task 2: Summary-statistics table ========================================
@@ -104,8 +144,8 @@ kbl(summary_table, digits = 3, booktabs = TRUE,
   kable_styling(latex_options = "HOLD_position")
 ```
 
-###Figure 1: Health Outome VS. Smoking
-```{r figure #1}
+### Figure 1: Health Outome VS. Smoking
+```{r fig1}
 ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
   geom_point(alpha = 0.4, color = "grey40") +
   geom_smooth(method = "lm", se = FALSE, color = "#1F7A5C", linewidth = 1) +
