@@ -117,6 +117,59 @@ ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
   ) +
   theme_minimal()
 ```
+### Figure 2: Transformed Data
+```{r fig2}
+ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
+  geom_point(alpha = 0.4, color = "grey40") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE,
+              color = "#1F7A5C", linewidth = 1) +
+  labs(
+    title = "Quadratic Smoking Term and Controls in 2 OLS Specifications",
+    x = "Adult Smoking Rate",
+    y = "Fair/Poor Health",
+    caption = paste("n =", n_obs)
+  ) +
+  theme_minimal()
+```
+#Regression
+```{r regression}
+fit_simple <- feols(outcome ~ smoking + I(smoking^2), data=gp_reg_data)
+
+fit_full <- feols(outcome ~ smoking + I(smoking^2) + income + education + uninsured + population,
+  data = gp_reg_data )
+etable(
+  fit_simple, fit_full,
+  fitstat = ~ n + r2 + ar2,
+  digits = 3,
+  dict = c(
+    outcome        = "Fair/Poor Health",
+    smoking        = "Adult Smoking",
+    "I(smoking^2)" = "Smoking²",
+    income         = "Income Inequality",
+    education      = "Some College",
+    uninsured      = "Uninsured",
+    population     = "Population"
+  ),
+  caption = "Quadratic smoking term and controls in two OLS specifications.",
+  float = TRUE,
+  placement = "H",
+  style.tex = style.tex("aer"),
+  tex = TRUE
+)
+```
+# Interpretation 
+
+#F Test 
+```{r test}
+fit_full_lm <- lm(outcome ~ smoking + I(smoking^2) + income + education + uninsured + population,
+                  data = gp_reg_data)
+
+f_controls <- linearHypothesis(
+  fit_full_lm,
+  c("income = 0", "education = 0", "uninsured = 0")
+)
+```
+
 
 
 
