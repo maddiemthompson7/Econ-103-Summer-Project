@@ -207,13 +207,26 @@ f_controls
 Column (1) of Table X puts adult smoking on its own and returns a slope of 0.942.
 Adding the controls in column (2) pulls it down to 0.213, a shrinkage of about 77%.
 
-
 \clearpage
 # Appendix: All Code
 ```{r appendix, echo=TRUE, eval=FALSE}
 # Appendix: All code used in the report
 # This chunk prints every other chunk in the document.
 ```{r appendix, echo=TRUE, eval=FALSE, ref.label=knitr::all_labels()}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
