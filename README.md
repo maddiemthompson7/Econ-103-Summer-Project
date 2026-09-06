@@ -170,6 +170,63 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
 
 # 3. Model and methods
 
+REPLACE ME. Section 3 needs the regression estimate and why that specification; why each control belongs; which functional form chosen and
+why it suits that variable; and a reading of Figures 2 and 3.
+
+```{r fig2-pop-levels, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
+# Task 4: Figure 2, population in LEVELS ==================================
+# Deliberately the untransformed version as its job is to show the
+# skew that motivates the log in Section 3. A handful of very large counties
+# take up the whole axis and every other county is crushed against the left
+# edge, leaving it practically unreadable.
+ggplot(counties, aes(x = population, y = fair_poor_health)) +
+  geom_point(alpha = 0.20, size = 0.8, color = "grey30") +
+  geom_smooth(method = "lm", se = FALSE, color = fit_color, linewidth = 1) +
+  scale_x_continuous(labels = label_number(scale = 1e-6, suffix = "M")) +
+  scale_y_continuous(labels = label_number(suffix = "%")) +
+  labs(
+    title = "Figure 2: REPLACE ME",
+    subtitle = "REPLACE ME",
+    x = "County population (millions)",
+    y = "Adults in fair or poor health (%)",
+    caption = paste0("One point per county (n = ", comma(n_clean),
+                     "). Line is OLS. Data: County Health Rankings, 2025.")
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title    = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 8.5),
+    plot.caption  = element_text(color = "grey40", hjust = 0),
+    panel.grid.minor = element_blank()
+  )
+```
+
+```{r fig3-pop-logs, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
+# Task 5: Figure 3, the same plot on the LOG scale ========================
+# Same counties, same fitted line, log x-axis. Read side by side with Figure
+# 2, this is the evidence that the transformation earns its place: the points
+# now fill the plotting region instead of piling up at one edge.
+ggplot(counties, aes(x = log_population, y = fair_poor_health)) +
+  geom_point(alpha = 0.20, size = 0.8, color = "grey30") +
+  geom_smooth(method = "lm", se = FALSE, color = fit_color, linewidth = 1) +
+  scale_y_continuous(labels = label_number(suffix = "%")) +
+  labs(
+    title = "Figure 3: REPLACE ME",
+    subtitle = "REPLACE ME",
+    x = "Log county population (log people)",
+    y = "Adults in fair or poor health (%)",
+    caption = paste0("One point per county (n = ", comma(n_clean),
+                     "). Line is OLS. Data: County Health Rankings, 2025.")
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(
+    plot.title    = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 8.5),
+    plot.caption  = element_text(color = "grey40", hjust = 0),
+    panel.grid.minor = element_blank()
+  )
+```
+
 \clearpage
 # Appendix: all code
 
