@@ -1,6 +1,6 @@
 # Econ-103-Summer-Project
 
-maddie's version: 
+current version: 
 ---
 title: "Adult Smoking & County Health Outcomes"
 author: "Group 22. Maddie Thompson (UID 006460651) & Tommy Nguyen (UID 206756393)"
@@ -89,139 +89,88 @@ Our dependent variable is the **percentage of adults who report that they are in
 We predict that counties with higher smoking rates have a higher share of adults in fair or poor health. Smoking has a direct and well-documented path to disease, including lung cancer, respiratory illness, and cardiovascular disease, and a county where smoking is common is also likely to differ in other health behaviours that track with worse outcomes. We expect the coefficient to shrink once income, education, insurance, and population enter, but not to collapse. Counties with similar median incomes smoke at very different rates, depending on state tobacco taxes, local norms, and regional history, so income cannot be doing all the work. Additionally, cigarettes do physical damage to the lungs and other body parts in ways that poverty alone does not.
 
 # 2. Data NEEDS EDIT
-Each observation is from U.S County Health data in 2025. There are 3172 rows observed in 2025. No rows were removed but columns were removed due to the amount the data holds. There are hundreds of measures included which is not feasible or necessary for this regression. 
+We use the County Health Rankings & Roadmaps 2025 national analytic data file from countyhealthrankings.org, in which each observation represents a U.S. county in a single year. The raw file carries hundreds of measures; we keep the nine columns this analysis uses. We express the four rate variables in percentage points by multiplying the reported proportions by 100, and we construct the log of median household income and the log of population. After cleaning, `r n_clean` of `r n_raw` counties remain, with `r n_dropped` dropped: two are very small counties (Kalawao, HI, population 81, and Loving, TX, population 43), and eight are Connecticut counties, which no longer have health data reported for them. Fair or poor health averages 19.56% across counties (SD 4.80, range 8.8% to 46.5%), and adult smoking averages 17.96% (SD 3.89, range 5.9% to 38.3%). Population is the lopsided variable: its mean of 106,593 sits against a standard deviation of 332,667, and it runs from 217 people to over 9.6 million.
 
-Table #1: Population showsis heavily right-skewed data, with a mean of 312,000 with a maximum of of 334 million.
-
-```{r summary, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+```{r summary-table}
+# Task 2: Summary-statistics table ========================================
+# Mean, SD, min, max, and n for the outcome and every regressor, which is the
+# set the rubric asks for. Built as a small data frame first so the numbers
+# and their labels stay together in one place.
 summary_vars <- tibble(
   Variable = c(
-    "Fair/Poor Health (%)",
-    "Adult Smoking (%)",
-    **"Median Household Income (ratio)",**
-    "Some College (%)",
-    "Uninsured (%)",
+    "Fair or poor health (% of adults)",
+    "Adult smoking (% of adults)",
+    "Median household income ($)",
+    "Some college (% of adults 25-44)",
+    "Uninsured (% under 65)",
     "Population"
   ),
   values = list(
-    gp_reg_data$outcome,
-    gp_reg_data$smoking,
-    gp_reg_data$income,
-    gp_reg_data$education,
-    gp_reg_data$uninsured,
-    gp_reg_data$population
+    counties$fair_poor_health,
+    counties$adult_smoking,
+    counties$median_income,
+    counties$some_college,
+    counties$uninsured,
+    counties$population
   )
 )
 
-summary_table <- summary_vars %>%
+summary_table <- summary_vars |>
   mutate(
     Mean = sapply(values, mean),
     SD   = sapply(values, sd),
     Min  = sapply(values, min),
     Max  = sapply(values, max),
     N    = sapply(values, length)
-  ) %>%
+  ) |>
   select(-values)
 
-kbl(summary_table, digits = 3, booktabs = TRUE,
-    caption = "Summary Statistics")
+kbl(
+  summary_table,
+  digits = 2,
+  format.args = list(big.mark = ","),
+  booktabs = TRUE,
+  caption = "Counties vary widely in both adult smoking and self-reported health, each spanning more than 30 percentage points, leaving substantial variation to explain.",
+  linesep = ""
+) |>
+  kable_styling(latex_options = "HOLD_position", font_size = 9) |>
+  footnote(
+    general = paste0("One row per county (n = ", comma(n_clean),
+                     "). Data: County Health Rankings & Roadmaps, 2025."),
+    general_title = "",
+    threeparttable = TRUE,
+    footnote_as_chunk = TRUE
+  )
 ```
 
-The average county reports 19.6% of adults who are in poor/fair health with a standard deviation 0f 4.8%, showing that counties differed in health outcomes. The average individual smoking rate is 18% with a range from approximately 6% to 38%. County population's had a larger range from 217 residents to 334 million, averaging 312,000 which does not fully show the range. 
-
-
-### Figure 1: Health Outome VS. Smoking
-```{r fig1, fig.width=5, fig.height=3, out.width="60%"}
-ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
-  geom_point(alpha = 0.45, size = 1.1, color = "grey30") +
-  geom_smooth(method = "lm", se = FALSE, color = "#1F7A5C", linewidth = 1) +
+```{r fig1-smoking, fig.width = 6.5, fig.height = 3.2, fig.align = "center"}
+# Task 3: Figure 1, outcome against the main regressor
+# Fair or poor health against adult smoking, both in percentage points, with
+# the OLS line on top. This is the plot Section 2 reads: it is the raw
+# relationship the whole report is about, before any controls enter.
+ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
+  geom_point(alpha = 0.20, size = 0.8, color = "grey30") +
+  geom_smooth(method = "lm", se = FALSE, color = fit_color, linewidth = 1) +
+  scale_x_continuous(labels = label_number(suffix = "%")) +
+  scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
-    title = "Figure 1: Counties with higher smoking tend to 
-                          report worse health",
-    subtitle = "The fitted line slopes upward, summarizing the positive association",
-    x = "Adult Smoking Rate",
-    y = "Fair/Poor Health",
-    caption = paste0("One point per county (n = ", n_obs,
-                     "). Line is OLS. Data: County Health Rankings 2025.")
+    title = "Figure 1: Counties that smoke more report worse health",
+    subtitle = "Each extra percentage point of smoking goes with about one more point of adults in fair or poor health",
+    x = "Adult smoking rate (% of adults)",
+    y = "Adults in fair or poor health (%)",
+    caption = paste0("One point per county (n = ", comma(n_clean),
+                     "). Line is OLS. Data: County Health Rankings, 2025.")
   ) +
   theme_minimal(base_size = 10) +
   theme(
-    plot.title = element_text(face = "bold"),
-    plot.caption = element_text(color = "grey40", hjust = 0),
+    plot.title    = element_text(face = "bold"),
+    plot.subtitle = element_text(size = 8.5),
+    plot.caption  = element_text(color = "grey40", hjust = 0),
     panel.grid.minor = element_blank()
   )
 ```
 
-### Figure 2: Transformed Data
-```{r fig2, fig.width=5, fig.height=3, out.width="60%"}
-ggplot(gp_reg_data, aes(x = smoking, y = outcome)) +
-  geom_point(alpha = 0.45, size = 1.1, color = "grey30") +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE,
-              color = "#1F7A5C", linewidth = 1) +
-  labs(
-    title = "Figure 2: Quadratic Smoking Term and Controls in 
-                        2 OLS Specifications",
-    subtitle = "The quadratic curve bends upward, indicating stronger association at higher smoking rates",
-    x = "Adult Smoking Rate",
-    y = "Fair/Poor Health",
-    caption = paste0("One point per county (n = ", n_obs,
-                     "). Line is quadratic OLS. Data: County Health Rankings 2025.")
-  ) +
-  theme_minimal(base_size = 10) +
-  theme(
-    plot.title = element_text(face = "bold"),
-    plot.caption = element_text(color = "grey40", hjust = 0),
-    panel.grid.minor = element_blank()
-  )
-```
-```{r regression-table, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
-fit_simple <- feols(
-  outcome ~ smoking,
-  data = gp_reg_data
-)
-
-fit_full <- feols(
-  outcome ~ smoking + I(smoking^2) + income + education + uninsured + population,
-  data = gp_reg_data
-)
-
-results_table <- etable(
-  fit_simple, fit_full,
-  fitstat = ~ n + r2 + ar2,
-  digits = 3,
-  dict = c(
-    outcome        = "Fair/Poor Health (%)",
-    smoking        = "Adult Smoking (%)",
-    "I(smoking^2)" = "Smoking²",
-    income         = "Income Inequality",
-    education      = "Some College (%)",
-    uninsured      = "Uninsured (%)",
-    population     = "Population"
-  ),
-  caption = "Smoking is positively associated with poor health; the quadratic term strengthens the relationship.",
-  notes = "OLS estimates; standard errors in parentheses. Data: County Health Rankings 2025.",
-  style.tex = style.tex("aer"),
-  tex = TRUE
-)
-cat(results_table)
-```
-
-```{r ftest, echo=FALSE}
-fit_full_lm <- lm(
-  outcome ~ smoking + I(smoking^2) + income + education + uninsured + population,
-  data = gp_reg_data
-)
-
-f_controls <- linearHypothesis(
-  fit_full_lm,
-  c("income = 0", "education = 0", "uninsured = 0")
-)
-
-f_controls
-```
-# Results
-Column (1) of Table X puts adult smoking on its own and returns a slope of 0.942.
-Adding the controls in column (2) pulls it down to 0.213, a shrinkage of about 77%.
+# 3. Model and methods
 
 \clearpage
 # Appendix: All Code
