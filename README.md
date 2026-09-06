@@ -86,7 +86,7 @@ Our dependent variable is the **percentage of adults who report that they are in
 
 We predict that counties with higher smoking rates have a higher share of adults in fair or poor health. Smoking has a direct and well-documented path to disease, including lung cancer, respiratory illness, and cardiovascular disease, and a county where smoking is common is also likely to differ in other health behaviours that track with worse outcomes. We therefore expect a positive coefficient of roughly 0.7 to 0.85 percentage points of fair or poor health per percentage point of smoking. Much more than that is hard to credit as fair or poor health spans only about 38 percentage points across all counties while smoking spans 32, so a coefficient near or above 1.0 would have smoking accounting for nearly the entire national spread in health on its own. We also expect the coefficient to shrink once income, education, insurance, and population enter, but not to collapse. Counties with similar median incomes smoke at very different rates, depending on state tobacco taxes, local norms, and regional history, so income cannot be doing all the work. Additionally, cigarettes do physical damage to the lungs and other body parts in ways that poverty alone does not.
 
-# 2. Data NEEDS EDIT
+# 2. Data 
 We use the County Health Rankings & Roadmaps 2025 national analytic data file from countyhealthrankings.org, in which each observation represents a U.S. county in a single year. The raw file carries hundreds of measures; we keep the nine columns this analysis uses. We express the four rate variables in percentage points by multiplying the reported proportions by 100, and we construct the log of median household income and the log of population. After cleaning, `r n_clean` of `r n_raw` counties remain, with `r n_dropped` dropped: two are very small counties (Kalawao, HI, population 81, and Loving, TX, population 43), and eight are Connecticut counties, which no longer have health data reported for them. Fair or poor health averages 19.56% across counties (SD 4.80, range 8.8% to 46.5%), and adult smoking averages 17.96% (SD 3.89, range 5.9% to 38.3%). Population is the lopsided variable: its mean of 106,593 sits against a standard deviation of 332,667, and it runs from 217 people to over 9.6 million.
 
 ```{r summary-table}
@@ -152,8 +152,8 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
   scale_x_continuous(labels = label_number(suffix = "%")) +
   scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
-    title = "Figure 1: Counties that smoke more report worse health",
-    subtitle = "Each extra percentage point of smoking goes with about one more point of adults in fair or poor health",
+    title = "Figure 1: Counties that smoke more tend to report worse health",
+    subtitle = "Each extra percentage point of smoking goes with about one more point of adults in fair or poor health, summarizing the positive association",
     x = "Adult smoking rate (% of adults)",
     y = "Adults in fair or poor health (%)",
     caption = paste0("One point per county (n = ", comma(n_clean),
