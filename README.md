@@ -168,7 +168,7 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
   )
 ```
 
-# 3. Model and methods 
+# 3. Model & Methods 
 We estimate by OLS  
 $$\text{fair/poor}_i = \beta_0 + \beta_1\text{smoking}_i + \beta_2\log(\text{income}_i) + \beta_3\text{college}_i + \beta_4\text{uninsured}_i + \beta_5\log(\text{pop}_i) + u_i$$
 
@@ -235,6 +235,14 @@ ggplot(counties, aes(x = log_population, y = fair_poor_health)) +
 # 4. Results
 
 ```{r regressiontable, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+# Task 6: Regression table, two specifications side by side ========================
+# etable(tex = TRUE) returns LaTeX source text, so it has to be cat()-ed from
+# cat() from a chunk using results = "asis". float = TRUE gives the table a
+# caption; placement = "H" pins it here instead of letting it drift to the
+# next page. This table reports the simple smoking model and the full model
+# with four controls (log income, some college, uninsured, and log population)
+# side by side, matching the two specifications discussed in Section 4.
+
 # Simple model: smoking alone
 fit_simple <- feols(
   fair_poor_health ~ adult_smoking,
@@ -302,7 +310,7 @@ f_df2  <- f_controls$Res.Df[2]
 f_p    <- f_controls$`Pr(>F)`[2]
 ```
 
-Table 2 puts the two specifications side by side. Column (1) gives adult smoking on its own a slope of 0.945, meaning a one percentage point increase in smoking is associated with about 0.95 percentage points more adults reporting fair or poor health. Adding our four controls in column (2) pulls that to 0.542, a shrinkage of about 43%. Without the controls, part of what income, education, insurance, and county size explain was being handed to smoking.
+Table 2 puts the two specifications side by side. Column (1) gives adult smoking on its own a slope of 0.945, meaning a one percentage point increase in smoking is associated with about 0.95 percentage points more adults reporting fair or poor health. Adding our four controls in column (2) pulls that to 0.542, a shrinkage of about 43%. Without the controls, part of what income, education, insurance, and county size explain was being attributed to smoking.
 
 Holding smoking, income, uninsured rate, and population fixed, a county with one percentage point more of adults aged 25 to 44 with some college reports 0.081 percentage points fewer adults in fair or poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 10% higher reports about 0.56 percentage points fewer. That second figure needs scaling to be read. The coefficient on log income is a semi-elasticity, and its raw value of -5.89 corresponds to a one-unit move in log income, which is a county roughly 172% richer. The 10% comparison is the version a reader can picture.
 
