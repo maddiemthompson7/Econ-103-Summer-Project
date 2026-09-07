@@ -241,6 +241,51 @@ ggplot(counties, aes(x = log_population, y = fair_poor_health)) +
   )
 ```
 
+# 4 Results 
+
+```{r regressiontable, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
+# Simple model: smoking alone
+fit_simple <- feols(
+  fair_poor_health ~ adult_smoking,
+  data = counties
+)
+
+# Full model: smoking + 4 controls
+fit_full <- feols(
+  fair_poor_health ~ adult_smoking + log_income + some_college + uninsured + log_population,
+  data = counties
+)
+
+# Two-specification regression table
+results_table <- etable(
+  fit_simple, fit_full,
+  fitstat = ~ n + r2 + ar2,
+  digits = 3,
+  dict = c(
+    fair_poor_health = "Fair or poor health (%)",
+    adult_smoking    = "Adult smoking (%)",
+    log_income       = "Log income",
+    some_college     = "Some college (%)",
+    uninsured        = "Uninsured (%)",
+    log_population   = "Log population"
+  ),
+  caption = "Higher smoking rates are associated with worse health; the gradient shrinks once controls enter.",
+  notes = "OLS estimates; standard errors in parentheses. Data: County Health Rankings 2025.",
+  style.tex = style.tex("aer"),
+  tex = TRUE
+)
+
+cat(results_table)
+```
+
+Table 2 shows the 2 specifications next to each other. The first column shows adult smoking on its own with a slope of 0.945, meaning that a 1% point increase in smoking is associated with approximately 94.5 percentage points more adults reporting fair or poor health. In the second column, we add in our 4 controls following our regression (income, education, uninsured rate, and population). The coefficient changes to approximately 0.542, showing a difference of ~43%. With the controls, counties with lower income, lower education, higher uninsured rate, and smaller populations report worse health outcomes. Like stated previously, without these controls, their effect to smoking is more accurately reported.
+
+Two of the full model's partial slopes.  The uninsured rate as well as log-population coefficients are both positive, explaining that counties with more uninsured households or larger populations report roughly higher numbers of adults with fair/poor health. Holding smoking, income, uninsured rate, and population fixed, a county with individuals ages 25-44 with some college experience 1$ point higher shows 0.081 % points fewer adults in fair/poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 1% higher reports a ~5.89% point fewer adults in fair or poor health on average. 
+
+The coefficient on adult smoking is **EDITTTTTTTTT**. A 1 % point increase in smoking is associated with 0.542 % point more adults reporting fair or poor health. Economically,  acountry whose smoking rate is 10% points higher on average reports a 5.42 % point increase in adults in fair/poor health.
+
+The estimate R^2= 0.780 and the adjusted R^2= 0.779 since it accounts for the variables added to the regression. Although this is a small difference, the characteritsics chosen from the larger data set, explain a large share
+
 \clearpage
 
 # Appendix: all code
