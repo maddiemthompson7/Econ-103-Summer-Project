@@ -245,7 +245,7 @@ fit_simple <- feols(
   data = counties
 )
 
-# Full model: smoking + 4 controls
+# Full model: smoking + 4 controls, two of them in logs. Both by OLS. 
 fit_full <- feols(
   fair_poor_health ~ adult_smoking + log_income + some_college + uninsured + log_population,
   data = counties
