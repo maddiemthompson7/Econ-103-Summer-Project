@@ -273,6 +273,24 @@ results_table <- etable(
 cat(results_table)
 ```
 
+```{r f-test}
+
+fit_full_lm <- lm(
+  fair_poor_health ~ adult_smoking + log_income + some_college +
+    uninsured + log_population,
+  data = counties
+)
+
+f_controls <- linearHypothesis(
+  fit_full_lm,
+  c("log_income = 0", "some_college = 0", "uninsured = 0", "log_population = 0")
+)
+
+f_stat <- f_controls$F[2]
+f_df1  <- abs(f_controls$Df[2])
+f_df2  <- f_controls$Res.Df[2]
+f_p    <- f_controls$`Pr(>F)`[2]
+
 Table 2 shows the 2 specifications next to each other. The first column shows adult smoking on its own with a slope of 0.945, meaning that a 1% point increase in smoking is associated with approximately 94.5 percentage points more adults reporting fair or poor health. In the second column, we add in our 4 controls following our regression (income, education, uninsured rate, and population). The coefficient changes to approximately 0.542, showing a difference of ~43%. With the controls, counties with lower income, lower education, higher uninsured rate, and smaller populations report worse health outcomes. Like stated previously, without these controls, their effect to smoking is more accurately reported.
 
 Two of the full model's partial slopes.  The uninsured rate as well as log-population coefficients are both positive, explaining that counties with more uninsured households or larger populations report roughly higher numbers of adults with fair/poor health. Holding smoking, income, uninsured rate, and population fixed, a county with individuals ages 25-44 with some college experience 1$ point higher shows 0.081 % points fewer adults in fair/poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 1% higher reports a ~5.89% point fewer adults in fair or poor health on average. 
