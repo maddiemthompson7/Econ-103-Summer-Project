@@ -174,18 +174,13 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
 why it suits that variable; and a reading of Figures 2 and 3.
 
 We estimate our OLS by 
-fair/poor health=  β₀ + β₁ smokingᵢ + β₂ log(incomeᵢ) + β₃ educationᵢ + β₄ uninsuredᵢ + β₅ log(populationᵢ) + ei 
+fair/poor healthᵢ =  β₀ + β₁ smokingᵢ + β₂ log(incomeᵢ) + β₃ educationᵢ + β₄ uninsuredᵢ + β₅ log(populationᵢ) + uᵢ
 
-Each control is plausibly correlated with smoking and health outcomes. Our first control, income, measured through its log, includes household differences such as living condidtions, equity. This is a control that both shapes influences on smoking and one's health outcomes. The next control, education, is a variable that describes one's education level, which ultimately can reflect in their knowledge around smoking and can influence their health. Uninsured rate directly affects the possibility of smoking and ultimately, health. This explains access to care. Population describes the size of the county but also explains underlying factors such as demographics and potential smoking norms. Leaving these variables out would cause the smoking coefficient to be biased because the smoking coefficient would absorb their effect.
+Each control is plausibly correlated with smoking and health outcomes. Our first control, income, measured through its log, matters because poorer counties tend to have more people who smoke and also tend to report worse health, so we want to separate income's association with health from smoking's. Some college, in others words, education, is included because it can influence people's health choices and how well they understand information around health. Uninsured is important because people without health insurance may have less access to medical care, which can affect their health regardless of whether they smoke. Population describes the size of the county but also explains underlying factors such as demographics and potential smoking norms. Population also helps account for differences between rural and urban counties, since they can differ in both smoking rates and access to healthcare. Leaving these variables out would cause the smoking coefficient to be biased because the smoking coefficient would absorb their effect.
 
-Our functional form uses logs for median household d population. Population ranges from a couple hundred residents to roughly ten million. Income ranges from 3#0,000 to $170,000. 
+Our functional form has population logged because it ranges from just 217 people to 9.6 million, making a one-person increase meaningless for some counties but much more important for others. Income is also logged because it varies by about a factor of six, so proportional differences in income are a more useful comparison than treating a $1 increase as having the same meaning at every income level. Smoking is not transformed because it ranges from 5.9% to 38.3%, is fairly close to symmetric, and adding a quadratic term barely improves the fit.
 
-Figure 2 plots fair/poor health against population levels. The plot shows a downward slope, showing data with most of the populations falling under 2.5 million. Figure 3 re-plots this data on a log scale. The slope changes and is supported by all counties instead of just one tail. The log scale creates more proportional data, which allows it to be meaningful for our hypothesis.
-
-
-
-
-
+Figures 2 and 3 also support this choice. Figure 2 shows the relationship using population in its original form, but the relationship is heavily compressed because a few very large counties pull the scale out, making it harder to see the pattern among most counties. Figure 3 uses log population, which spreads the observations out more evenly and makes the underlying relationship much clearer. The log scale creates more proportional data, which allows it to be meaningful for our hypothesis.
 
 ```{r fig2-pop-levels, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
 # Task 4: Figure 2, population in LEVELS ==================================
