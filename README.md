@@ -153,7 +153,7 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
   scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
     title = "Figure 1: Counties that smoke more tend to report worse health",
-    subtitle = "Each extra percentage point of smoking goes with about one more point of adults in fair or poor health, summarizing the positive association",
+    subtitle = "Each extra percentage point of smoking goes with about one more point of adults in fair or poor health, \n                                                      summarizing the positive association",
     x = "Adult smoking rate (% of adults)",
     y = "Adults in fair or poor health (%)",
     caption = paste0("One point per county (n = ", comma(n_clean),
@@ -185,8 +185,8 @@ ggplot(counties, aes(x = population, y = fair_poor_health)) +
   scale_x_continuous(labels = label_number(scale = 1e-6, suffix = "M")) +
   scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
-    title = "Figure 2: REPLACE ME",
-    subtitle = "REPLACE ME",
+    title = "Figure 2: County Size and Health Outcomes",
+    subtitle = "Larger counties tend to show lower rates of poor/fair health outcomes",
     x = "County population (millions)",
     y = "Adults in fair or poor health (%)",
     caption = paste0("One point per county (n = ", comma(n_clean),
@@ -211,8 +211,8 @@ ggplot(counties, aes(x = log_population, y = fair_poor_health)) +
   geom_smooth(method = "lm", se = FALSE, color = fit_color, linewidth = 1) +
   scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
-    title = "Figure 3: REPLACE ME",
-    subtitle = "REPLACE ME",
+    title = "Figure 3: Log Population and Health Outcomes ",
+    subtitle = "Larger couties show slightly lower rates of poor/fair health outcomes",
     x = "Log county population (log people)",
     y = "Adults in fair or poor health (%)",
     caption = paste0("One point per county (n = ", comma(n_clean),
