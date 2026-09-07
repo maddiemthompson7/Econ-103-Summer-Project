@@ -324,7 +324,7 @@ Our hypothesis stated previously was that counties with higher smoking rates wou
 One variable we could not control for is physical inactivity???, which is plausibly related to both smoking rates and poor health. **Something something estimate omitted variable
 **
 
-We found an association across our 3,142 observed counties, **not causation**. We do not claim that smoking causes worse health outcomes. Nothing here shows that a county which lowered its smoking rate would see its health outcomes improve **(keep or delete this last sentence).** 
+We found an association across our 3,142 observed counties, **not causation**. We do not claim that smoking causes worse health outcomes. There is no evidence that a county which lowered its smoking rates would see its health outcomes improve.
 
 \clearpage
 
