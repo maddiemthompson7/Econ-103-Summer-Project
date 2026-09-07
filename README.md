@@ -169,14 +169,10 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
 ```
 
 # 3. Model and methods 
-
- Section 3 needs the regression estimate and why that specification; why each control belongs; which functional form chosen and
-why it suits that variable; and a reading of Figures 2 and 3.
-
 We estimate our OLS by 
 $$\text{fair/poor}_i = \beta_0 + \beta_1\text{smoking}_i + \beta_2\log(\text{income}_i) + \beta_3\text{college}_i + \beta_4\text{uninsured}_i + \beta_5\log(\text{pop}_i) + u_i$$
 
-Each control is plausibly correlated with smoking and health outcomes. Our first control, income, measured through its log, matters because poorer counties tend to have more people who smoke and also tend to report worse health, so we want to separate income's association with health from smoking's. Some college, in others words, education, is included because it can influence people's health choices and how well they understand information around health. Uninsured is important because people without health insurance may have less access to medical care, which can affect their health regardless of whether they smoke. Population describes the size of the county but also explains underlying factors such as demographics and potential smoking norms. Population also helps account for differences between rural and urban counties, since they can differ in both smoking rates and access to healthcare. Leaving these variables out would cause the smoking coefficient to be biased because the smoking coefficient would absorb their effect.
+Each control is plausibly correlated with smoking and health outcomes. Our first control, income, measured through its log, matters because poorer counties tend to have more people who smoke and also tend to report worse health, so we want to separate income's association with health from smoking's. Some college, in other words, education, is included because it can influence people's health choices and how well they understand information around health. Uninsured is important because people without health insurance may have less access to medical care, which can affect their health regardless of whether they smoke. Population describes the size of the county but also explains underlying factors such as demographics and potential smoking norms. Population also helps account for differences between rural and urban counties, since they can differ in both smoking rates and access to healthcare. Leaving these variables out would cause the smoking coefficient to be biased because the smoking coefficient would absorb their effect.
 
 Our functional form has population logged because it ranges from just 217 people to 9.6 million, making a one-person increase meaningless for some counties but much more important for others. Income is also logged because it varies by about a factor of six, so proportional differences in income are a more useful comparison than treating a $1 increase as having the same meaning at every income level. Smoking is not transformed because it ranges from 5.9% to 38.3%, is fairly close to symmetric, and adding a quadratic term barely improves the fit.
 
