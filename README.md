@@ -319,7 +319,7 @@ The $R^2$ is 0.780, and the adjusted $R^2$ is 0.779, slightly lower because it c
 The F-test on the four controls jointly gives F(4, 3136) = 692.4 with a p-value below 0.001, so we reject the null that they are all zero. The controls belong as a block, which is also what the movement between columns (1) and (2) was telling us.
 
 # 5. Discussion
-Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. In preparation for this, we predicted that the sign of the coefficient would be positive, resulting in an estimate of 0.945. As we introduced our controls, this coefficient shrank by 0.403 to 0.542. This still shows economic significance. The Confidence interval [0.510, 0.575 explains.......{EDIT}. 
+Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. In preparation for this, we predicted that the sign of the coefficient would be positive, resulting in an estimate of 0.945. As we introduced our controls, this coefficient shrank by 0.403 to 0.542. This still shows economic significance. The Confidence interval [0.510, 0.575 explains moderate to large effects. 
 
 We found an association across our 3,142 observed counties, **not causation**. Here, we do not say that smoking causes worse health outcomes. There is no evidence to that if a county lowered their smoking rates, health outcomes would move in a positive direction and result in better health in individuals.
 
