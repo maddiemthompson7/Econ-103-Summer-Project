@@ -319,11 +319,12 @@ The $R^2$ is 0.780, and the adjusted $R^2$ is 0.779, slightly lower because it c
 The F-test on the four controls jointly gives F(4, 3136) = 692.4 with a p-value below 0.001, so we reject the null that they are all zero. The controls belong as a block, which is also what the movement between columns (1) and (2) was telling us.
 
 # 5. Discussion
-Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. In preparation for this, we predicted that the sign of the coefficient would be positive, resulting in an estimate of 0.945. As we introduced our controls, this coefficient shrank by 0.403 to 0.542. This still shows economic significance. The Confidence interval [0.510, 0.575 explains moderate to large effects. 
+Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. The simple regression returned 0.945, and adding our controls pulled it to 0.542. The confidence interval [0.510, 0.575] gives the range in which the true coefficient is likely to fall. Because the entire interval sits below our predicted range of 0.7 to 0.85, the data does not just fall short of our prediction, it rules that range out. We got the direction right and correctly predicted that the coefficient would shrink after adding controls but not collapse. However, we overestimated its size.
 
-We found an association across our 3,142 observed counties, **not causation**. Here, we do not say that smoking causes worse health outcomes. There is no evidence to that if a county lowered their smoking rates, health outcomes would move in a positive direction and result in better health in individuals.
+One variable we could not control for is physical inactivity???, which is plausibly related to both smoking rates and poor health. **Something something estimate omitted variable
+**
 
-The evidence discovered through our regression and investigation of the relationship shows that our hypothesis was correct, meaning it holds economic significance. We have found an association between the data that varies over time and counties. 
+We found an association across our 3,142 observed counties, **not causation**. We do not claim that smoking causes worse health outcomes. Nothing here shows that a county which lowered its smoking rate would see its health outcomes improve **(keep or delete this last sentence).** 
 
 \clearpage
 
