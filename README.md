@@ -170,8 +170,22 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
 
 # 3. Model and methods [EDIT ME]
 
-REPLACE ME. Section 3 needs the regression estimate and why that specification; why each control belongs; which functional form chosen and
+ Section 3 needs the regression estimate and why that specification; why each control belongs; which functional form chosen and
 why it suits that variable; and a reading of Figures 2 and 3.
+
+We estimate our OLS by 
+fair/poor health=  β₀ + β₁ smokingᵢ + β₂ log(incomeᵢ) + β₃ educationᵢ + β₄ uninsuredᵢ + β₅ log(populationᵢ) + ei 
+
+Each control is plausibly correlated with smoking and health outcomes. Our first control, income, measured through its log, includes household differences such as living condidtions, equity. This is a control that both shapes influences on smoking and one's health outcomes. The next control, education, is a variable that describes one's education level, which ultimately can reflect in their knowledge around smoking and can influence their health. Uninsured rate directly affects the possibility of smoking and ultimately, health. This explains access to care. Population describes the size of the county but also explains underlying factors such as demographics and potential smoking norms. Leaving these variables out would cause the smoking coefficient to be biased because the smoking coefficient would absorb their effect.
+
+Our functional form uses logs for median household d population. Population ranges from a couple hundred residents to roughly ten million. Income ranges from 3#0,000 to $170,000. 
+
+Figure 2 plots fair/poor health against population levels. The plot shows a downward slope, showing data with most of the populations falling under 2.5 million. Figure 3 re-plots this data on a log scale. The slope changes and is supported by all counties instead of just one tail. The log scale creates more proportional data, which allows it to be meaningful for our hypothesis.
+
+
+
+
+
 
 ```{r fig2-pop-levels, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
 # Task 4: Figure 2, population in LEVELS ==================================
