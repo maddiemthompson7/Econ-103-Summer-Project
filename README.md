@@ -284,7 +284,9 @@ Two of the full model's partial slopes.  The uninsured rate as well as log-popul
 
 The coefficient on adult smoking is **EDITTTTTTTTT**. A 1 % point increase in smoking is associated with 0.542 % point more adults reporting fair or poor health. Economically,  acountry whose smoking rate is 10% points higher on average reports a 5.42 % point increase in adults in fair/poor health.
 
-The estimate R^2= 0.780 and the adjusted R^2= 0.779 since it accounts for the variables added to the regression. Although this is a small difference, the characteritsics chosen from the larger data set, explain a large share
+The estimate R^2= 0.780 and the adjusted R^2= 0.779 since it accounts for the variables added to the regression. Although this is a small difference, the characteritsics chosen from the larger data set, explain a large share of thevariation in health outcomes.
+
+We tested the significance of the variables addes. Our F test, F(4, 3136) is approziamtely 54 with a small p-value of ~0.001. Here, we reject the null hypothesis at the 0.05 level. Adding our controls and through our testing help us understant that they belong in the model. Coming back to our regression table, the differences and shfts between column (1) to column (2).
 
 \clearpage
 
