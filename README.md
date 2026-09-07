@@ -86,8 +86,8 @@ Our dependent variable is the **percentage of adults who report that they are in
 
 We predict that counties with higher smoking rates have a higher share of adults in fair or poor health. Smoking has a direct and well-documented path to disease, including lung cancer, respiratory illness, and cardiovascular disease, and a county where smoking is common is also likely to differ in other health behaviours that track with worse outcomes. We therefore expect a positive coefficient of roughly 0.7 to 0.85 percentage points of fair or poor health per percentage point of smoking. Much more than that is hard to credit as fair or poor health spans only about 38 percentage points across all counties while smoking spans 32, so a coefficient near or above 1.0 would have smoking accounting for nearly the entire national spread in health on its own. We also expect the coefficient to shrink once income, education, insurance, and population enter, but not to collapse. Counties with similar median incomes smoke at very different rates depending on state tobacco taxes, local norms, and regional history, so income cannot be doing all the work. Additionally, cigarettes do physical damage to the lungs and other body parts in ways that poverty alone does not.
 
-# 2. Data [REVIEW ME]
-We use the County Health Rankings & Roadmaps 2025 national analytic data file from countyhealthrankings.org, in which each observation represents a U.S. county in a single year. The raw file carries hundreds of measures; we keep the nine columns this analysis uses. We express the four rate variables in percentage points by multiplying the reported proportions by 100, and we construct the log of median household income and the log of population. After cleaning, `r n_clean` of `r n_raw` counties remain, with `r n_dropped` dropped: two are very small counties (Kalawao, HI, with population 81, and Loving, TX, with population 43), and eight are Connecticut counties, which no longer have health data reported for them. Table 1 shows that fair or poor health averages 19.56% across counties (SD 4.80, range 8.8% to 46.5%), and adult smoking averages 17.96% (SD 3.89, range 5.9% to 38.3%). Population is the lopsided variable, where its mean of 106,593 sits against a standard deviation of 332,667, and it runs from 217 people to over 9.6 million.
+# 2. Data
+We use the County Health Rankings & Roadmaps 2025 national analytic data file from countyhealthrankings.org, in which each observation represents a U.S. county in a single year. The raw file carries hundreds of measures; we keep the nine columns this analysis uses. We express the four rate variables in percentage points by multiplying the reported proportions by 100, and we construct the log of median household income and the log of population. After cleaning, 3,142 of 3,152 counties remain, with 10 dropped: two are very small counties (Kalawao, HI, with population 81, and Loving, TX, with population 43), and eight are Connecticut counties, which no longer have health data reported for them. Table 1 shows that fair or poor health averages 19.56% across counties (SD 4.80, range 8.8% to 46.5%), and adult smoking averages 17.96% (SD 3.89, range 5.9% to 38.3%). Population is the lopsided variable, where its mean of 106,593 sits against a standard deviation of 332,667, and it runs from 217 people to over 9.6 million.
 
 ```{r summary-table}
 # Task 2: Summary-statistics table ========================================
@@ -168,7 +168,7 @@ ggplot(counties, aes(x = adult_smoking, y = fair_poor_health)) +
   )
 ```
 
-# 3. Model and methods [EDIT ME]
+# 3. Model and methods 
 
  Section 3 needs the regression estimate and why that specification; why each control belongs; which functional form chosen and
 why it suits that variable; and a reading of Figures 2 and 3.
@@ -180,7 +180,7 @@ Each control is plausibly correlated with smoking and health outcomes. Our first
 
 Our functional form has population logged because it ranges from just 217 people to 9.6 million, making a one-person increase meaningless for some counties but much more important for others. Income is also logged because it varies by about a factor of six, so proportional differences in income are a more useful comparison than treating a $1 increase as having the same meaning at every income level. Smoking is not transformed because it ranges from 5.9% to 38.3%, is fairly close to symmetric, and adding a quadratic term barely improves the fit.
 
-Figures 2 and 3 also support this choice. Figure 2 shows the relationship using population in its original form, but the relationship is heavily compressed because a few very large counties pull the scale out, making it harder to see the pattern among most counties. Figure 3 uses log population, which spreads the observations out more evenly and makes the underlying relationship much clearer. The log scale creates more proportional data, which allows it to be meaningful for our hypothesis.
+Figures 2 and 3 also support this choice. Figure 2 shows the relationship using population in its original form, but the relationship is heavily compressed because a few very large counties pull the scale out, making it harder to see the pattern among most counties. Figure 3 uses log population, which spreads the observations out more evenly and makes the underlying relationship much clearer. That improvement is why the log transformation earns its place in the model.
 
 ```{r fig2-pop-levels, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
 # Task 4: Figure 2, population in LEVELS ==================================
@@ -221,7 +221,7 @@ ggplot(counties, aes(x = log_population, y = fair_poor_health)) +
   scale_y_continuous(labels = label_number(suffix = "%")) +
   labs(
     title = "Figure 3: Log Population and Health Outcomes ",
-    subtitle = "Larger couties show slightly lower rates of poor/fair health outcomes",
+    subtitle = "Larger counties show slightly lower rates of poor/fair health outcomes",
     x = "Log county population (log people)",
     y = "Adults in fair or poor health (%)",
     caption = paste0("One point per county (n = ", comma(n_clean),
@@ -256,6 +256,8 @@ results_table <- etable(
   fit_simple, fit_full,
   fitstat = ~ n + r2 + ar2,
   digits = 3,
+  float     = TRUE,
+  placement = "H",
   dict = c(
     fair_poor_health = "Fair or poor health (%)",
     adult_smoking    = "Adult smoking (%)",
@@ -290,16 +292,19 @@ f_stat <- f_controls$F[2]
 f_df1  <- abs(f_controls$Df[2])
 f_df2  <- f_controls$Res.Df[2]
 f_p    <- f_controls$`Pr(>F)`[2]
+```
 
-Table 2 shows the 2 specifications next to each other. The first column shows adult smoking on its own with a slope of 0.945, meaning that a 1% point increase in smoking is associated with approximately 94.5 percentage points more adults reporting fair or poor health. In the second column, we add in our 4 controls following our regression (income, education, uninsured rate, and population). The coefficient changes to approximately 0.542, showing a difference of ~43%. With the controls, counties with lower income, lower education, higher uninsured rate, and smaller populations report worse health outcomes. Like stated previously, without these controls, their effect to smoking is more accurately reported.
+Table 2 shows the two specifications next to each other. The first column shows adult smoking on its own with a slope of 0.945, meaning that a one percentage point increase in smoking is associated with approximately 0.95 percentage points more adults reporting fair or poor health. In the second column we add our four controls (income, education, uninsured rate, and population). The coefficient falls to 0.542, a shrinkage of about 43%. Without those controls, part of what income, education, insurance, and county size explain is being attributed to smoking.
 
-Two of the full model's partial slopes.  The uninsured rate as well as log-population coefficients are both positive, explaining that counties with more uninsured households or larger populations report roughly higher numbers of adults with fair/poor health. Holding smoking, income, uninsured rate, and population fixed, a county with individuals ages 25-44 with some college experience 1$ point higher shows 0.081 % points fewer adults in fair/poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 1% higher reports a ~5.89% point fewer adults in fair or poor health on average. 
+We interpret two of the full model's partial slopes. Holding smoking, income, uninsured rate, and population fixed, a county with one percentage point more of adults aged 25 to 44 with some college reports 0.081 percentage points fewer adults in fair or poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 10% higher reports about 0.56 percentage points fewer adults in fair or poor health.
 
-The coefficient on adult smoking is **EDITTTTTTTTT**. A 1 % point increase in smoking is associated with 0.542 % point more adults reporting fair or poor health. Economically,  acountry whose smoking rate is 10% points higher on average reports a 5.42 % point increase in adults in fair/poor health.
+The coefficient on log income is a semi-elasticity, read against proportional changes in income rather than dollar ones. The raw coefficient of −5.89 corresponds to a one-unit change in log income, which is a county roughly 172% richer, so the 10% comparison above is the readable version.
 
-The estimate R^2= 0.780 and the adjusted R^2= 0.779 since it accounts for the variables added to the regression. Although this is a small difference, the characteritsics chosen from the larger data set, explain a large share of thevariation in health outcomes.
+The estimated coefficient on smoking is 0.542, with a standard error of 0.016, giving a t-statistic of about 33 and a 95% confidence interval of roughly [0.51, 0.57]. This is statistically significant by any reasonable standard: zero is nowhere near the confidence interval, so we decisively reject the hypothesis of no association. Economically, the association is also substantial. A 10-percentage-point increase in a county's smoking rate is associated with about a 5.4-percentage-point increase in the share reporting fair or poor health, which is about a seventh of the 38-point national range. Statistical and economic significance point the same way here: the estimate is both large and precise, and even the low end of the confidence interval remains economically meaningful.
 
-We tested the significance of the variables addes. Our F test, F(4, 3136) is approziamtely 54 with a small p-value of ~0.001. Here, we reject the null hypothesis at the 0.05 level. Adding our controls and through our testing help us understant that they belong in the model. Coming back to our regression table, the differences and shfts between column (1) to column (2).
+The $R^2$ is 0.780 and the adjusted $R^2$ is 0.779, slightly lower because it charges the model for the regressors it added. These five county characteristics account for most of what distinguishes healthier counties from less healthy ones, leaving about a fifth of the variation to everything we have not measured.
+
+We tested the four controls jointly. Our F-test gives F(4, 3136) = 692.4 with a p-value below 0.001, so we reject the null that the four control coefficients are all zero. The controls belong in the model as a block, which is also what the movement between columns (1) and (2) was telling us.
 
 \clearpage
 
