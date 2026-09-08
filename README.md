@@ -173,7 +173,7 @@ Each control is plausibly correlated with smoking and health outcomes. Income ma
 
 Our functional form has population logged because it ranges from just 217 people to 9.6 million, making a one-person increase meaningless for some counties but much more important for others. Income is also logged because it varies by about a factor of six, so proportional differences in income are a more useful comparison than treating a $1 increase as having the same meaning at every income level. Smoking is not transformed because it ranges from 5.9% to 38.3% and is fairly close to symmetric.
 
-Figures 2 and 3 also support this choice. Figure 2 shows the relationship using population in its original form, but the relationship is heavily compressed because a few very large counties pull the scale out, making it harder to see the pattern among most counties. Figure 3 uses log population, which spreads the observations out more evenly and makes the underlying relationship much clearer, earning the transformation's place in the model.
+Figures (2) and (3) also support this choice. Figure (2) shows the relationship using population in its original form, but the relationship is heavily compressed because a few very large counties pull the scale out, making it harder to see the pattern among most counties. Figure 3 uses log population, which spreads the observations out more evenly and makes the underlying relationship much clearer, earning the transformation's place in the model.
 
 ```{r fig2-pop-levels, fig.width = 6.5, fig.height = 3.0, fig.align = "center"}
 # Task 4: Figure 2, population in LEVELS ==================================
@@ -307,7 +307,7 @@ f_df2  <- f_controls$Res.Df[2]
 f_p    <- f_controls$`Pr(>F)`[2]
 ```
 
-Table 2 puts the two specifications side by side. Column (1) gives adult smoking on its own a slope of 0.945, meaning a one percentage point increase in smoking is associated with about 0.95 percentage points more adults reporting fair or poor health. Adding our four controls in column (2) pulls that to 0.542, a shrinkage of about 43%. Without the controls, part of what income, education, insurance, and county size explain was being attributed to smoking. 
+Table (2) puts the two specifications side by side. Column (1) gives adult smoking on its own a slope of 0.945, meaning a one percentage point increase in smoking is associated with about 0.95 percentage points more adults reporting fair or poor health. Adding our four controls in column (2) pulls that to 0.542, a shrinkage of about 43%. Without the controls, part of what income, education, insurance, and county size explain was being attributed to smoking. 
 
 Log population makes the point clearly. On its own, larger counties report better health, as Figure 3 shows, but that advantage reverses once income and education are held fixed and the coefficient in column (2) turns positive.
 
