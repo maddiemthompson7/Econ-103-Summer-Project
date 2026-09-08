@@ -1,4 +1,3 @@
-# Econ-103-Summer-Project
 ---
 title: "Adult Smoking & County Health Outcomes"
 author: "Group 22. Maddie Thompson (UID 006460651) & Tommy Nguyen (UID 206756393)"
@@ -316,15 +315,15 @@ Smoking's coefficient of 0.542 carries a standard error of 0.016, a t-statistic 
 
 The $R^2$ is 0.780, and the adjusted $R^2$ is 0.779, slightly lower because it charges the model for the regressors it added. These five county characteristics account for most of what distinguishes healthier counties from less healthy ones, leaving about a fifth of the variation to everything we have not measured.
 
-The F-test on the four controls jointly gives F(4, 3136) = 692.4 with a p-value below 0.001, so we reject the null that they are all zero. The controls belong as a block, which is also what the movement between columns (1) and (2) was telling us.
+The F-test on the four controls jointly gives F(4, 3136) = 692.4 with a p-value below 0.001, so we reject the null that they are all zero. This test helps support the decision of the four added controls being in the model. The controls belong as a block, which is also what the movement between columns (1) and (2) was telling us. 
 
 # 5. Discussion
-Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. The simple regression returned 0.945, and adding our controls pulled it to 0.542. The confidence interval [0.510, 0.575] gives the range in which the true coefficient is likely to fall. Because the entire interval sits below our predicted range of 0.7 to 0.85, the data does not just fall short of our prediction, it rules that range out. We got the direction right and correctly predicted that the coefficient would shrink after adding controls but not collapse. However, we overestimated its size.
 
-One variable we could not control for is physical inactivity???, which is plausibly related to both smoking rates and poor health. **Something something estimate omitted variable
-**
+Our hypothesis stated previously was that counties with higher smoking rates would report overall worse health outcomes, resulting in a slope of approximately 0.7 to 0.85 percentage points of fair/poor health per percentage point of smoking. The simple regression returned 0.945, and adding our controls pulled it to 0.542. The confidence interval [0.510, 0.575] gives the range in which the true coefficient is likely to fall. The Confidence interval explains moderate to large effects. Because the entire interval sits below our predicted range of 0.7 to 0.85, the data does not just fall short of our prediction, it rules that range out. We got the direction right and correctly predicted that the coefficient would shrink after adding controls but not collapse. However, we overestimated its size.
 
-We found an association across our 3,142 observed counties, **not causation**. We do not claim that smoking causes worse health outcomes. There is no evidence that a county which lowered its smoking rates would see its health outcomes improve.
+One variable we could not control for is physical inactivity, which is plausibly related to both smoking rates and poor health. Leaving this out pushes our smoking coffieicient further away from zero, where we saw the differences in our table (2).
+
+We found an association across our 3,142 observed counties, **not causation**. We do not claim that smoking causes worse health outcomes. There is no evidence that a county which lowered its smoking rate would see its health outcomes improve.
 
 \clearpage
 
