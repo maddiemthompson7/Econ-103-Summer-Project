@@ -309,7 +309,7 @@ f_p    <- f_controls$`Pr(>F)`[2]
 
 Table (2) puts the two specifications side by side. Column (1) gives adult smoking on its own a slope of 0.945, meaning a one percentage point increase in smoking is associated with about 0.95 percentage points more adults reporting fair or poor health. Adding our four controls in column (2) pulls that to 0.542, a shrinkage of about 43%. Without the controls, part of what income, education, insurance, and county size explain was being attributed to smoking. 
 
-Log population makes the point clearly. On its own, larger counties report better health, as Figure 3 shows, but that advantage reverses once income and education are held fixed and the coefficient in column (2) turns positive.
+Log population makes the point clearly. On its own, larger counties report better health, as Figure (3) shows, but that advantage reverses once income and education are held fixed and the coefficient in column (2) turns positive.
 
 Holding smoking, income, uninsured rate, and population fixed, a county where the share of adults aged 25 to 44 with some college is one percentage point higher reports 0.081 percentage points fewer adults in fair or poor health. Holding smoking, education, uninsured rate, and population fixed, a county whose median household income is 10% higher reports about 0.56 percentage points fewer adults in fair or poor health. The coefficient on log income is a semi-elasticity, and its raw value of -5.89 corresponds to a one-unit move in log income, which is a county roughly 172% richer. The 10% comparison is the version a reader can picture.
 
